@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 
-//icon
-import { BsGoogle, BsFacebook, BsX, BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsGoogle, BsFacebook, BsX, BsEye, BsEyeSlash } from 'react-icons/bs';
 
 function Register({ onClose }) {
   const [email, setEmail] = useState('');
@@ -19,14 +18,9 @@ function Register({ onClose }) {
     }
   };
 
-  const closePopup = () => {
-    onClose();
-  };
-
-
   return (
     <div className="bg-white w-96 rounded-[16px] p-8 pb-4 relative">
-      <button className='absolute top-3 right-3 text-[32px]' onClick={closePopup}><BsX /></button> 
+      <button className='absolute top-3 right-3 text-[32px]' onClick={onClose}><BsX /></button>
       <h2 className="text-[36px] text-center text-[#151515] font-medium mb-2 fontMitr ">ลงทะเบียน</h2>
       <form className="space-y-4">
         <div>
