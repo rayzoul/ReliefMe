@@ -65,25 +65,25 @@ function Login({ onClose }) {
 
       const walletRef = await addDoc(collection(db, 'user', userRef.id, 'wallet'), walletData);
       console.log('เพิ่มข้อมูล wallet เรียบร้อยแล้ว', walletRef.id);
-      
+
       const checkDayData = {
         check_day_id: 1, // Replace with the desired check day ID
         check_day_name: 'Monday', // Replace with the desired check day name
         coin_id: '...', // Replace with the desired coin ID
         diary_id: '...' // Replace with the desired diary ID
       };
-      
+
       const checkDayRef = await addDoc(collection(db, 'user', userRef.id, 'wallet', walletRef.id, 'Check_day'), checkDayData);
       console.log('เพิ่มข้อมูล Check_day เรียบร้อยแล้ว', checkDayRef.id);
-      
+
       const coinData = {
         coin_id: `040${randomID}`,
         coin_num: 0 // Replace with the desired coin number
       };
-      
+
       const coinRef = await addDoc(collection(db, 'user', userRef.id, 'wallet', walletRef.id, 'Check_day', checkDayRef.id, 'coin'), coinData);
       console.log('เพิ่มข้อมูล coin เรียบร้อยแล้ว', coinRef.id);
-      
+
 
       const selttestData = {
         self_test_id: `005${randomID}`,
@@ -95,7 +95,7 @@ function Login({ onClose }) {
       };
 
 
-      const selttestRef = await addDoc(collection(db, 'user', userRef.id, 'selttest'), selttestData);
+      const selttestRef = await addDoc(collection(db, 'user', userRef.id, 'selt_test'), selttestData);
       console.log('เพิ่มข้อมูล selttest เรียบร้อยแล้ว', selttestRef.id);
 
       const heal_articleData = {
@@ -115,7 +115,7 @@ function Login({ onClose }) {
 
 
       const heal_testData = {
-        heal_id: `009${randomID}`,
+        heal_test_id: `009${randomID}`,
         heal_title_title: '...',
         heal_title_img: '...',
         heal_title_link: '...',
@@ -160,25 +160,25 @@ function Login({ onClose }) {
         result_name: '...',
         dairy_id: `010${randomID}`,
       };
-      
+
       const resultRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result'), resultData);
       console.log('เพิ่มข้อมูล result เรียบร้อยแล้ว', resultRef.id);
-      
+
       const highvalueData = {
         high_value_id: `011${randomID}`,
-        high_value_name:'...',
+        high_value_name: '...',
         result_id: `011${randomID}`,
         period_id: `012${randomID}`
       };
-      
-      const highvalueRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'highvalue'), highvalueData);
+
+      const highvalueRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'high_value'), highvalueData);
       console.log('เพิ่มข้อมูล highvalue เรียบร้อยแล้ว', highvalueRef.id);
 
       const periodData = {
         period_id: `012${randomID}`,
-        period_name:'...'
+        period_name: '...'
       };
-      
+
       const periodRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'period'), periodData);
       console.log('เพิ่มข้อมูล highvalue เรียบร้อยแล้ว', periodRef.id);
 
@@ -188,12 +188,41 @@ function Login({ onClose }) {
         advice_description: '...',
         period_id: `012${randomID}`
       };
-      
-      const adviceRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'highvalue', highvalueRef.id, 'advice'), adviceData);
+
+      const adviceRef = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'high_value', highvalueRef.id, 'advice'), adviceData);
       console.log('เพิ่มข้อมูล advice เรียบร้อยแล้ว', adviceRef.id);
+
+      const conclusionData = {
+        conclusion_id: `013${randomID}`,
+        conclusion_name: '...',
+        advice_id: `012${randomID}`,
+        self_test_id: `005${randomID}`,
+        heal_article_id: `006${randomID}`,
+        heal_test_id: `009${randomID}`,
+        diy_id: `010${randomID}`
+      };
       
+      // เพิ่มเอกสาร "conclusion" ในเอกสาร "selt_test"
+      const conclusionRefInSeltTest = await addDoc(collection(db, 'user', userRef.id, 'selt_test', selttestRef.id, 'conclusion'), conclusionData);
+      console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInSeltTest.id);
       
+      // เพิ่มเอกสาร "conclusion" ในเอกสาร "advice"
+      const conclusionRefInAdvice = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'high_value', highvalueRef.id, 'advice', adviceRef.id, 'conclusion'), conclusionData);
+      console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInAdvice.id);
+
+      // เพิ่มเอกสาร "conclusion" ในเอกสาร "heal_article"
+      const conclusionRefInHealarticle = await addDoc(collection(db, 'user', userRef.id, 'heal_article', heal_articleRef.id, 'conclusion'), conclusionData);
+      console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInHealarticle.id);
+
+      // เพิ่มเอกสาร "conclusion" ในเอกสาร "heal_test"
+      const conclusionRefInHealTest = await addDoc(collection(db, 'user', userRef.id, 'heal_test', heal_testRef.id, 'conclusion'), conclusionData);
+      console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInHealTest.id);
       
+      // เพิ่มเอกสาร "conclusion" ในเอกสาร "diy"
+      const conclusionRefInDiy = await addDoc(collection(db, 'user', userRef.id, 'diy', diyRef.id, 'conclusion'), conclusionData);
+      console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInDiy.id);
+
+
 
     } catch (error) {
       console.error('Error creating user data:', error);
