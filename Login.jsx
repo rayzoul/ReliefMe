@@ -113,6 +113,16 @@ function Login({ onClose }) {
       const heal_articleRef = await addDoc(collection(db, 'user', userRef.id, 'heal_article'), heal_articleData);
       console.log('เพิ่มข้อมูล heal_article เรียบร้อยแล้ว', heal_articleRef.id);
 
+      const typeData = {
+        type_id: `008${randomID}`,
+        type_name: '...'
+      };
+      
+      // เพิ่มเอกสาร "type" ในเอกสาร "heal_article"
+      const typeRefInHealArticle = await addDoc(collection(db, 'user', userRef.id, 'heal_article', heal_articleRef.id, 'type'), typeData);
+      console.log('เพิ่มข้อมูล type เรียบร้อยแล้ว', typeRefInHealArticle.id);
+      
+
 
       const heal_testData = {
         heal_test_id: `009${randomID}`,
@@ -143,6 +153,29 @@ function Login({ onClose }) {
 
       const diyRef = await addDoc(collection(db, 'user', userRef.id, 'diy'), diyData);
       console.log('เพิ่มข้อมูล diy เรียบร้อยแล้ว', diyRef.id);
+
+      const subjectData = {
+        subject_id: `014${randomID}`,
+        subject_name: '...'
+      };
+
+      const subjectRef = await addDoc(collection(db, 'user', userRef.id, 'diy', diyRef.id, 'subject'), subjectData);
+      console.log('เพิ่มข้อมูล subject เรียบร้อยแล้ว', subjectRef.id);
+
+      // เพิ่มเอกสาร "subject" ในเอกสาร "heal_article"
+      const subjectRefInHealArticle = await addDoc(collection(db, 'user', userRef.id, 'heal_article', heal_articleRef.id, 'subject'), subjectData);
+      console.log('เพิ่มข้อมูล subject เรียบร้อยแล้ว', subjectRefInHealArticle.id);
+
+      const text_subjectData = {
+        text_subject_id: `014${randomID}`,
+        text_subject_details: '...',
+        subject_id: `014${randomID}`
+      };
+      
+      // เพิ่มเอกสาร "text_subject" ในเอกสาร "subject" ใน Collection ของ DIY
+      const text_subjectRef = await addDoc(collection(db, 'user', userRef.id, 'diy', diyRef.id, 'subject', subjectRef.id, 'text_subject'), text_subjectData);
+      console.log('เพิ่มข้อมูล text_subject เรียบร้อยแล้ว', text_subjectRef.id);
+      
 
       const diaryData = {
         dairy_id: `010${randomID}`,
@@ -201,11 +234,11 @@ function Login({ onClose }) {
         heal_test_id: `009${randomID}`,
         diy_id: `010${randomID}`
       };
-      
+
       // เพิ่มเอกสาร "conclusion" ในเอกสาร "selt_test"
       const conclusionRefInSeltTest = await addDoc(collection(db, 'user', userRef.id, 'selt_test', selttestRef.id, 'conclusion'), conclusionData);
       console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInSeltTest.id);
-      
+
       // เพิ่มเอกสาร "conclusion" ในเอกสาร "advice"
       const conclusionRefInAdvice = await addDoc(collection(db, 'user', userRef.id, 'diary', diaryRef.id, 'result', resultRef.id, 'high_value', highvalueRef.id, 'advice', adviceRef.id, 'conclusion'), conclusionData);
       console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInAdvice.id);
@@ -217,10 +250,28 @@ function Login({ onClose }) {
       // เพิ่มเอกสาร "conclusion" ในเอกสาร "heal_test"
       const conclusionRefInHealTest = await addDoc(collection(db, 'user', userRef.id, 'heal_test', heal_testRef.id, 'conclusion'), conclusionData);
       console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInHealTest.id);
-      
+
       // เพิ่มเอกสาร "conclusion" ในเอกสาร "diy"
       const conclusionRefInDiy = await addDoc(collection(db, 'user', userRef.id, 'diy', diyRef.id, 'conclusion'), conclusionData);
       console.log('เพิ่มข้อมูล conclusion เรียบร้อยแล้ว', conclusionRefInDiy.id);
+
+
+      const adminData = {
+        admin_id: `001${randomID}`,
+        admin_username: '...',
+        admin_fullname: '...',
+        admin_email: '...',
+        admin_password: '...'
+      };
+      
+      // เพิ่มเอกสาร "admin" ในเอกสาร "user"
+      const adminRef = await addDoc(collection(db, 'user', userRef.id, 'admin'), adminData);
+      console.log('เพิ่มข้อมูล admin เรียบร้อยแล้ว', adminRef.id);
+      
+      // เพิ่มเอกสาร "admin" ในเอกสาร "heal_article"
+      const adminRefInHealArticle = await addDoc(collection(db, 'user', userRef.id, 'heal_article', heal_articleRef.id, 'admin'), adminData);
+      console.log('เพิ่มข้อมูล admin เรียบร้อยแล้ว', adminRefInHealArticle.id);
+      
 
 
 
